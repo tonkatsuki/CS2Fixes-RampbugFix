@@ -43,8 +43,8 @@ struct SchemaKey
 	bool networked;
 };
 
-class Z_CBaseEntity;
-void SetStateChanged(Z_CBaseEntity* pEntity, int offset);
+void EntityNetworkStateChanged(uintptr_t entityInstance, uint nOffset);
+void ChainNetworkStateChanged(uintptr_t networkVarChainer, uint nLocalOffset);
 
 constexpr uint32_t val_32_const = 0x811c9dc5;
 constexpr uint32_t prime_32_const = 0x1000193;
@@ -96,7 +96,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 			if (m_chain != 0 && m_key.networked)																			\
 			{																												\
 				DevMsg("Found chain offset %d for %s::%s\n", m_chain, ThisClassName, #varName);								\
-				addresses::NetworkStateChanged((uintptr_t)(pThisClass) + m_chain, m_key.offset + extra_offset, 0xFFFFFFFF);	\
+				ChainNetworkStateChanged((uintptr_t)(pThisClass) + m_chain, m_key.offset + extra_offset);					\
 			}																												\
 			else if(m_key.networked)																						\
 			{																												\
@@ -104,7 +104,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 					need to have their this pointer corrected by the offset .*/												\
 				DevMsg("Attempting to call SetStateChanged on on %s::%s\n", ThisClassName, #varName);						\
 				if (!IsStruct)																								\
-					SetStateChanged((Z_CBaseEntity*)pThisClass, m_key.offset + extra_offset);								\
+					EntityNetworkStateChanged((uintptr_t)pThisClass, m_key.offset + extra_offset);							\
 				else \
 					CALL_VIRTUAL(void, 1, pThisClass, m_key.offset + extra_offset, 0xFFFFFFFF, 0xFFFF);						\
 			}																												\

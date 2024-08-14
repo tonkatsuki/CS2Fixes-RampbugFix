@@ -50,8 +50,6 @@ bool addresses::Initialize(CGameConfig *g_GameConfig)
 		modules::hammer = new CModule(ROOTBIN, "tools/hammer");
 #endif
 
-	RESOLVE_SIG(g_GameConfig, "NetworkStateChanged", addresses::NetworkStateChanged);
-	RESOLVE_SIG(g_GameConfig, "StateChanged", addresses::StateChanged);
 	RESOLVE_SIG(g_GameConfig, "CBasePlayerController_SetPawn", addresses::CBasePlayerController_SetPawn);
 	RESOLVE_SIG(g_GameConfig, "InitPlayerMovementTraceFilter", addresses::InitPlayerMovementTraceFilter);
 	RESOLVE_SIG(g_GameConfig, "TracePlayerBBox", addresses::TracePlayerBBox);
