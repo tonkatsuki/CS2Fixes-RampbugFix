@@ -53,5 +53,5 @@ private:
 	const char *m_pOffsetName;
 	int m_iOffset;
 	size_t m_iPatchLength;
-	uintptr_t *m_pPatchAddress;
+	uintptr_t m_pPatchAddress;
 };
