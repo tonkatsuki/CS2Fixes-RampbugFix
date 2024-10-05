@@ -41,7 +41,7 @@ public:
 	bool PerformPatch(CGameConfig *gameConfig);
 	void UndoPatch();
 
-	uintptr_t *GetPatchAddress() { return m_pPatchAddress; }
+	uintptr_t GetPatchAddress() { return m_pPatchAddress; }
 
 private:
 	CModule **m_pModule;
