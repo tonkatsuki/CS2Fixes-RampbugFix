@@ -73,7 +73,7 @@ void CMemPatch::UndoPatch()
 
 	Message("Undoing patch %s at %p\n", m_pszName, m_pPatchAddress);
 
-	Plat_WriteMemory(m_pPatchAddress, m_pOriginalBytes, m_iPatchLength);
+	Plat_WriteMemory((void*)m_pPatchAddress, m_pOriginalBytes, m_iPatchLength);
 
 	delete[] m_pOriginalBytes;
 }
