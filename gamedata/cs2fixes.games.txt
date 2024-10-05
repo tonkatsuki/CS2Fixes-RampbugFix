@@ -121,7 +121,7 @@
 			{
 				"library"		"server"
 				"windows"		"\x48\x89\x74\x24\x2A\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\xF9"
-				"linux"			"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x45\x89\xC4"
+				"linux"			"\x55\x48\x89\xE5\x41\x57\x49\x89\xFF\x41\x56\x48\x8D\x3D\x2A\x2A\x2A\x2A\x41\x89\xCE"
 			}
 			// String: "CNavMesh::GetNearestNavArea"
 			"CNavMesh_GetNearestNavArea"
@@ -202,7 +202,7 @@
 			"ProcessMovement"
 			{
 				"library"	"server"
-				"windows"	"\x40\x56\x57\x48\x81\xEC\xC8\x00\x00\x00"
+				"windows"	"\x40\x56\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\x49"
 				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x83\xEC\x38\x48\x8B\x7F\x30"
 			}
 			
@@ -239,13 +239,13 @@
 			}
 			"Teleport"
 			{
-				"windows"		"155"
-				"linux"			"154"
+				"windows"		"157"
+				"linux"			"156"
 			}
 			"CollisionRulesChanged"
 			{
-				"windows"		"174"
-				"linux"			"173"
+				"windows"		"179"
+				"linux"			"178"
 			}
 			"IsEntityPawn"
 			{
@@ -260,16 +260,16 @@
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"CCSPlayerController_ChangeTeam"
 			{
-				"windows"		"98"
-				"linux"			"97"
+				"windows"		"100"
+				"linux"			"99"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2872LL))(v9, v27, 0LL);
 			// 2872 (359 * 8) is the offset
 			"CBasePlayerPawn_CommitSuicide"
 			{
-				"windows"		"372"
-				"linux"			"372"
+				"windows"		"377"
+				"linux"			"377"
 			}
 			// In the function with "[%03d] Found: %s, firing\n", you'll find a call into a pointer offset just a bit higher, that's the offset * 8
 			"CGameRules_FindPickerEntity"
@@ -284,8 +284,8 @@
 			}
 			"CCSPlayerController_Respawn"
 			{
-				"windows"		"254"
-				"linux"			"256"
+				"windows"		"257"
+				"linux"			"259"
 			}
 			"GetHammerUniqueId"
 			{
