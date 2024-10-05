@@ -129,14 +129,6 @@ enum gender_t : uint8
 	GENDER_LAST = 0x14,
 };
 
-struct GameTime_t
-{
-public:
-	DECLARE_SCHEMA_CLASS_INLINE(GameTime_t)
-
-	SCHEMA_FIELD(float, m_Value)
-};
-
 class CNetworkTransmitComponent
 {
 public:
