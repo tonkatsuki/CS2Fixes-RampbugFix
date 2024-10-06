@@ -182,6 +182,9 @@ void TryPlayerMovePre(CCSPlayer_MovementServices *ms, Vector *pFirstDest, trace_
 	CTraceFilterPlayerMovementCS filter;
 	addresses::InitPlayerMovementTraceFilter(filter, pawn, pawn->m_Collision().m_collisionAttribute().m_nInteractsWith(),
 											  COLLISION_GROUP_PLAYER_MOVEMENT);
+
+	bool potentiallyStuck {};
+	
 	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
 	{
 		// Assume we can move all the way from the current origin to the end point.
@@ -205,11 +208,11 @@ void TryPlayerMovePre(CCSPlayer_MovementServices *ms, Vector *pFirstDest, trace_
 				break;
 			}
 			if (player->lastValidPlane.Length() > FLT_EPSILON
-				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.m_vHitNormal.Dot(player->lastValidPlane) < RAMP_BUG_THRESHOLD))
+				&& (!IsValidMovementTrace(pm, bounds, &filter) || pm.m_vHitNormal.Dot(player->lastValidPlane) < RAMP_BUG_THRESHOLD
+					|| (potentiallyStuck && pm.m_flFraction == 0.0f)))
 			{
 				// We hit a plane that will significantly change our velocity. Make sure that this plane is significant
 				// enough.
-				Vector direction = velocity.Normalized();
 				Vector offsetDirection;
 				f32 offsets[] = {0.0f, -1.0f, 1.0f};
 				bool success {};
@@ -293,6 +296,7 @@ void TryPlayerMovePre(CCSPlayer_MovementServices *ms, Vector *pFirstDest, trace_
 			{
 				player->lastValidPlane = pm.m_vHitNormal;
 			}
+			potentiallyStuck = pm.m_flFraction == 0.0f;
 		}
 
 		if (pm.m_flFraction * velocity.Length() > 0.03125f)
@@ -377,7 +381,7 @@ void TryPlayerMovePost(CCSPlayer_MovementServices *ms)
 	bool velocityHeavilyModified =
 		player->tpmVelocity.Normalized().Dot(velocity.Normalized()) < RAMP_BUG_THRESHOLD
 		|| (player->tpmVelocity.Length() > 50.0f && velocity.Length() / player->tpmVelocity.Length() < RAMP_BUG_VELOCITY_THRESHOLD);
-	if (player->overrideTPM && velocityHeavilyModified)
+	if (player->overrideTPM && velocityHeavilyModified && player->tpmOrigin != vec3_invalid && player->tpmVelocity != vec3_invalid)
 	{
 		player->SetOrigin(player->tpmOrigin);
 		player->SetVelocity(player->tpmVelocity);

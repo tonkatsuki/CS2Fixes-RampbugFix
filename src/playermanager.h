@@ -115,8 +115,8 @@ public:
 
 	bool didTPM {};
 	bool overrideTPM {};
-	Vector tpmVelocity;
-	Vector tpmOrigin;
+	Vector tpmVelocity = vec3_invalid;
+	Vector tpmOrigin = vec3_invalid;
 	Vector lastValidPlane;
 	
 	void SetConnected() { m_bConnected = true; }
